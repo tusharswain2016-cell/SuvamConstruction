@@ -98,88 +98,84 @@ body {
 }
 
 /* ══════════════════════════════
-   HERO — YouTube Background Video
+   HERO SLIDER — full screen, no text
 ══════════════════════════════ */
-.hero-video-section {
+.hero-slider {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  width: 100%; height: 100vh;
   overflow: hidden;
   margin-top: 64px;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 1s ease;
+}
+.slide.active { opacity: 1; }
+.slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  animation: kenburns 8s ease infinite alternate;
+}
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+/* Dots */
+.slider-dots {
+  position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 10;
+}
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.5); border: none; cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.dot.active { background: #fff; transform: scale(1.3); }
+
+/* Arrows */
+.slider-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+  color: #fff; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10; transition: background 0.3s;
+  border-radius: 0;
+}
+.slider-arrow:hover { background: rgba(208,25,26,0.7); }
+.slider-prev { left: 20px; }
+.slider-next { right: 20px; }
+
+/* ══════════════════════════════
+   BANNER VIDEO SECTION
+══════════════════════════════ */
+.banner-full {
+  position: relative; width: 100%; height: 420px; overflow: hidden;
   background: #000;
 }
-
-.video-overlay {
+.banner-video-overlay {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.38);
   z-index: 2;
 }
-
-/* YouTube iframe wrapper — covers full section */
-.yt-wrapper {
+.banner-yt-wrapper {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 177.78vh; /* 16:9 ratio */
+  width: 177.78vh;
   min-width: 100%;
-  height: 56.25vw; /* 16:9 ratio */
+  height: 56.25vw;
   min-height: 100%;
   z-index: 1;
   pointer-events: none;
 }
-.yt-wrapper iframe {
-  width: 100%; height: 100%;
-  border: none;
+.banner-yt-wrapper iframe {
+  width: 100%; height: 100%; border: none;
 }
-
-/* Hero content over video */
-.hero-content {
-  position: absolute; inset: 0; z-index: 3;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: 0 5%;
+.banner-logo-overlay {
+  position: absolute; bottom: 2rem; right: 3%;
+  display: flex; align-items: center; gap: 8px;
+  z-index: 3;
 }
-.hero-content h1 {
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900; color: #fff;
-  letter-spacing: 4px; text-transform: uppercase;
-  line-height: 1.15; margin-bottom: 1rem;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-}
-.hero-content h1 span { color: var(--red); }
-.hero-content p {
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 3px; text-transform: uppercase;
-  margin-bottom: 2rem;
-}
-.hero-cta {
-  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-}
-.hero-btn {
-  padding: 0.75rem 2rem; font-size: 0.8rem; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  text-decoration: none; cursor: pointer; border: none;
-  font-family: 'Maven Pro', sans-serif;
-  transition: all 0.3s;
-}
-.hero-btn-primary { background: var(--red); color: #fff; }
-.hero-btn-primary:hover { background: #a80e0e; transform: translateY(-2px); }
-.hero-btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.6); }
-.hero-btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
-
-/* Scroll indicator */
-.scroll-down {
-  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 6px;
-  color: rgba(255,255,255,0.7); font-size: 0.6rem; letter-spacing: 2px;
-  animation: bobble 2s ease-in-out infinite;
-}
-.scroll-down::before {
-  content: '';
-  width: 1px; height: 40px; background: rgba(255,255,255,0.4);
-}
-@keyframes bobble { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+.banner-logo-overlay img { height: 40px; width: auto; object-fit: contain; filter: brightness(10); }
 
 /* ══════════════════════════════
    ENQUIRY POPUP FORM (Sticky Side Tab)
@@ -648,12 +644,13 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .hero-video-section { height: 60vw; min-height: 260px; }
+  .hero-slider { height: 60vw; min-height: 260px; }
   .pillars-grid { grid-template-columns: 1fr 1fr; }
   .blogs-grid { grid-template-columns: 1fr 1fr; }
   .testi-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .banner-full { height: 300px; }
+  .banner-yt-wrapper { width: 100%; height: 100%; transform: none; top: 0; left: 0; }
   .stats-strip { grid-template-columns: 1fr 1fr; }
   .stat-item:nth-child(2) { border-right: none; }
   .stat-item:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.15); }
@@ -662,7 +659,7 @@ footer {
 
 @media (max-width: 620px) {
   .navbar { padding: 0 4%; }
-  .hero-video-section { height: 70vw; min-height: 220px; }
+  .hero-slider { height: 70vw; min-height: 220px; }
   .hero-content h1 { font-size: 1.8rem; }
   .journey { padding: 3.5rem 5%; }
   .pillars { padding: 0 5% 3.5rem; }
@@ -676,6 +673,7 @@ footer {
   .certs-row { gap: 1.2rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .banner-full { height: 240px; }
+  .banner-yt-wrapper { width: 100%; height: 100%; transform: none; top: 0; left: 0; }
   .section-header h2, .pillars-header h2, .certs-header h2, .journey h2 { font-size: 0.95rem; }
   .testi-heading { font-size: 1.5rem; }
   .sidebar-tab { font-size: 0.58rem; padding: 0.5rem 0.4rem; }
@@ -805,26 +803,28 @@ footer {
   </button>
 </nav>
 
-<!-- HERO — YouTube Background Video -->
-<div class="hero-video-section" id="home">
-  <div class="video-overlay"></div>
-  <div class="yt-wrapper">
-    <iframe
-      id="ytPlayer"
-      src="https://www.youtube.com/embed/4BzjUq921Y4?autoplay=1&mute=1&loop=1&playlist=4BzjUq921Y4&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
+<!-- HERO SLIDER — full width, no text -->
+<div class="hero-slider" id="home">
+  <div class="slide active">
+    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=85" alt="Slide 1">
   </div>
-  <div class="hero-content">
-    <h1>Building <span>Odisha's</span><br>Future, Brick by Brick</h1>
-    <p>Since 2000 — Trust · Quality · Innovation</p>
-    <div class="hero-cta">
-      <button class="hero-btn hero-btn-primary" onclick="openEnquiry()">Get Free Consultation</button>
-      <a class="hero-btn hero-btn-outline" href="#journey">Discover More</a>
-    </div>
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=85" alt="Slide 2">
   </div>
-  <div class="scroll-down">SCROLL</div>
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1600&q=85" alt="Slide 3">
+  </div>
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=85" alt="Slide 4">
+  </div>
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&q=85" alt="Slide 5">
+  </div>
+
+  <button class="slider-arrow slider-prev" onclick="changeSlide(-1)">&#8249;</button>
+  <button class="slider-arrow slider-next" onclick="changeSlide(1)">&#8250;</button>
+
+  <div class="slider-dots" id="dots"></div>
 </div>
 
 <!-- JOURNEY SECTION -->
@@ -912,9 +912,16 @@ footer {
   </div>
 </section>
 
-<!-- FULL-WIDTH BANNER -->
+<!-- FULL-WIDTH BANNER — YouTube Video Background -->
 <div class="banner-full" id="projects">
-  <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=85" alt="Banner">
+  <div class="banner-video-overlay"></div>
+  <div class="banner-yt-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/4BzjUq921Y4?autoplay=1&mute=1&loop=1&playlist=4BzjUq921Y4&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&playsinline=1"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
   <div class="banner-logo-overlay">
     <img src="https://res.cloudinary.com/dxmdcoca3/image/upload/v1777282231/Untitled_design_28_jluunh.png" alt="Suvam">
   </div>
@@ -1086,6 +1093,36 @@ footer {
 </footer>
 
 <script>
+/* ── SLIDER ── */
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('dots');
+let timer;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+});
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  dotsContainer.children[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  dotsContainer.children[cur].classList.add('active');
+  resetTimer();
+}
+
+function changeSlide(dir) { goTo(cur + dir); }
+
+function resetTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => changeSlide(1), 5000);
+}
+resetTimer();
+
 /* ── ENQUIRY POPUP ── */
 function openEnquiry() {
   document.getElementById('enquiryOverlay').classList.add('open');
