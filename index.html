@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Suvam Construction - Coming Soon</title>
+<title>suvamconstructions</title>
 
 <style>
 *{
@@ -26,7 +26,6 @@ body{
     position:relative;
 }
 
-/* Glow Effects */
 body::before{
     content:'';
     position:absolute;
@@ -56,16 +55,15 @@ body::after{
 }
 
 .wrapper{
-    max-width:900px;
+    max-width:950px;
     padding:40px 20px;
     color:#fff;
     position:relative;
     z-index:2;
-    animation:fadeUp 1.4s ease;
 }
 
 .logo{
-    font-size:58px;
+    font-size:56px;
     font-weight:900;
     letter-spacing:8px;
     margin-bottom:18px;
@@ -80,7 +78,7 @@ body::after{
 }
 
 h1{
-    font-size:86px;
+    font-size:82px;
     font-weight:900;
     text-transform:uppercase;
     letter-spacing:4px;
@@ -95,23 +93,42 @@ p{
     margin:auto;
 }
 
+.timer{
+    margin-top:45px;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.box{
+    width:110px;
+    padding:22px 10px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
+    backdrop-filter:blur(8px);
+}
+
+.box span{
+    display:block;
+    font-size:42px;
+    font-weight:900;
+}
+
+.box small{
+    font-size:13px;
+    letter-spacing:2px;
+    color:#ddd;
+    text-transform:uppercase;
+}
+
 .small{
     margin-top:35px;
     font-size:14px;
     letter-spacing:4px;
     color:#d4d4d4;
     text-transform:uppercase;
-}
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(50px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 @keyframes float1{
@@ -127,20 +144,29 @@ p{
 @media(max-width:768px){
 
 .logo{
-    font-size:38px;
-    letter-spacing:5px;
+    font-size:36px;
+    letter-spacing:4px;
 }
 
 h1{
-    font-size:52px;
+    font-size:48px;
 }
 
 p{
     font-size:16px;
 }
 
+.box{
+    width:85px;
+    padding:16px 8px;
+}
+
+.box span{
+    font-size:30px;
+}
+
 .small{
-    font-size:12px;
+    font-size:11px;
     letter-spacing:2px;
 }
 }
@@ -156,11 +182,55 @@ p{
 
     <p>
         Where Dreams Take Shape and Trust is Built.  
-        Our premium website is under construction and will be launching soon.
+        Our premium website is launching soon.
     </p>
+
+    <div class="timer">
+        <div class="box">
+            <span id="days">05</span>
+            <small>Days</small>
+        </div>
+
+        <div class="box">
+            <span id="hours">00</span>
+            <small>Hours</small>
+        </div>
+
+        <div class="box">
+            <span id="minutes">00</span>
+            <small>Minutes</small>
+        </div>
+
+        <div class="box">
+            <span id="seconds">00</span>
+            <small>Seconds</small>
+        </div>
+    </div>
 
     <div class="small">Building The Future of Odisha</div>
 </div>
+
+<script>
+let countdown = 5 * 24 * 60 * 60;
+
+setInterval(function(){
+
+let days = Math.floor(countdown / 86400);
+let hours = Math.floor((countdown % 86400) / 3600);
+let minutes = Math.floor((countdown % 3600) / 60);
+let seconds = countdown % 60;
+
+document.getElementById("days").innerHTML = String(days).padStart(2,'0');
+document.getElementById("hours").innerHTML = String(hours).padStart(2,'0');
+document.getElementById("minutes").innerHTML = String(minutes).padStart(2,'0');
+document.getElementById("seconds").innerHTML = String(seconds).padStart(2,'0');
+
+if(countdown > 0){
+countdown--;
+}
+
+},1000);
+</script>
 
 </body>
 </html>
